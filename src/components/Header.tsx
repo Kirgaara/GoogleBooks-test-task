@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { GiArchiveResearch } from 'react-icons/gi'
+import '../styles/Header.css'
 import { useAppDispatch } from '../hooks/redux'
 import {
   inputChange,
@@ -35,7 +36,7 @@ const Header = () => {
       <div className="container">
         <form onSubmit={handleFormSubmit}>
           <h1>Search for books</h1>
-          <div className="header_row">
+          <div className="input_row">
             <input
               type="text"
               className="search_input"

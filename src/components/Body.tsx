@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import '../styles/Content.css'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import Card from './Card'
 import { booksFetch } from '../store/reducers/BooksFetch'
@@ -24,29 +25,31 @@ const Body = () => {
     <BookDescription />
   ) : (
     <>
-      <div className="counter">{booksTotal}</div>
+      {!!booksTotal && !isLoading && (
+        <div className="counter">Found {booksTotal} results</div>
+      )}
+      {isLoading && <div className="loader"></div>}
       <div className="content">
         {error && <h1>Error!</h1>}
-        {isLoading ? (
-          <h1>Loading...</h1>
-        ) : (
-          <>
-            {!!books.length &&
-              books?.map((value: string, index: number) => (
-                <Card key={index} bookPosition={index} />
-              ))}
-          </>
-        )}
+        <>
+          {!!books.length &&
+            !isLoading &&
+            books?.map((value: string, index: number) => (
+              <Card key={index} bookPosition={index} />
+            ))}
+        </>
       </div>
-      <button
-        className="load"
-        onClick={() => {
-          dispatch(booksFetch(search_input, category, sortBy, counter))
-          setCounter(counter + 30)
-        }}
-      >
-        Load more
-      </button>
+      {!!booksTotal && !isLoading && (
+        <button
+          className="load"
+          onClick={() => {
+            dispatch(booksFetch(search_input, category, sortBy, counter))
+            setCounter(counter + 30)
+          }}
+        >
+          Load more
+        </button>
+      )}
     </>
   )
 }
