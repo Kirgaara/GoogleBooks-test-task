@@ -1,9 +1,10 @@
 # Google Books API Test Task
 
 Проект разработан при помощи create-react-app с использованием TypeScript. Помимо стандартных библиотек были подключены:
-react-redux и redux-toolkit: менеджер состояний;
-axios: для более удобных запросов;
-react-icons: для красивой кнопки поиска;
+
+- react-redux и redux-toolkit: менеджер состояний;
+- axios: для более удобных запросов;
+- react-icons: для красивой кнопки поиска;
 
 ## Функционал
 
