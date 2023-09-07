@@ -18,7 +18,7 @@ react-icons: для красивой кнопки поиска;
 ## Пример работы приложения
 
 ![search](./git-images/search.png)
-![description](./git-images/search.png)
+![description](./git-images/description.png)
 
 ## Available Scripts
 
