@@ -1,4 +1,5 @@
 import React from 'react'
+import '../styles/BookDescription.css'
 import { useAppSelector } from '../hooks/redux'
 
 const BookDescription = () => {
@@ -12,7 +13,9 @@ const BookDescription = () => {
       <h2 id="description_title">{title}</h2>
       <h3 id="description_categories">{categories}</h3>
       <h3 id="description_authors">{authors}</h3>
-      <h3 id="description_description">{description}</h3>
+      <div id="description_container">
+        <h3 id="description_description">{description}</h3>
+      </div>
     </div>
   )
 }

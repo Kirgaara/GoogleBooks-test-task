@@ -1,8 +1,8 @@
 .header {
   color: white;
-  background-color: gray;
+  background-image: url('../images/background.jpg');
   margin: 0;
-  height: 20%;
+  height: 20vh;
   width: 100%;
 }
 
@@ -26,6 +26,17 @@
   justify-content: center;
   padding: 10px;
 }
+
+.header_row h2,
+select {
+  margin: 10px;
+}
+
+.header_row h2,
+h1 {
+  -webkit-text-stroke: 1.5px black;
+}
+
 .input_row {
   display: flex;
   flex-direction: row;
@@ -34,15 +45,13 @@
 }
 
 @media (max-width: 540px) {
+  .header {
+    height: 35vh;
+  }
   .header_row {
     display: contents;
   }
   .header_row select {
     height: 30px;
   }
-}
-
-.header_row h2,
-select {
-  margin: 10px;
 }

@@ -25,6 +25,7 @@ const Body = () => {
     <BookDescription />
   ) : (
     <>
+      {opened && <BookDescription />}
       {!!booksTotal && !isLoading && (
         <div className="counter">Found {booksTotal} results</div>
       )}
