@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import Card from './Card'
 import { booksFetch } from '../store/reducers/BooksFetch'
 import BookDescription from './BookDescription'
+import ErrorBlock from './ErrorBlock'
 
 const Body = () => {
   const dispatch = useAppDispatch()
@@ -25,22 +26,24 @@ const Body = () => {
     <BookDescription />
   ) : (
     <>
-      {opened && <BookDescription />}
-      {!!booksTotal && !isLoading && (
+      {!!booksTotal && !isLoading && !error && (
         <div className="counter">Found {booksTotal} results</div>
       )}
       {isLoading && <div className="loader"></div>}
-      <div className="content">
-        {error && <h1>Error!</h1>}
-        <>
-          {!!books.length &&
-            !isLoading &&
-            books?.map((value: string, index: number) => (
-              <Card key={index} bookPosition={index} />
-            ))}
-        </>
-      </div>
-      {!!booksTotal && !isLoading && (
+      {error ? (
+        <ErrorBlock />
+      ) : (
+        <div className="content">
+          <>
+            {!!books.length &&
+              !isLoading &&
+              books?.map((value: string, index: number) => (
+                <Card key={index} bookPosition={index} />
+              ))}
+          </>
+        </div>
+      )}
+      {!!booksTotal && !isLoading && !error && (
         <button
           className="load"
           onClick={() => {
