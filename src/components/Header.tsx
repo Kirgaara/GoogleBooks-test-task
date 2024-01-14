@@ -1,152 +1,87 @@
 import React, { useState } from 'react'
-import { FaSearch } from 'react-icons/fa'
-import backgroundImg from '../images/background.jpg'
+import { GiArchiveResearch } from 'react-icons/gi'
+import '../styles/Header.css'
 import { useAppDispatch } from '../hooks/redux'
-import { inputChange } from '../store/reducers/FormSubmit'
-import { closePopup } from '../store/reducers/CharacterPopup'
-import styled from 'styled-components'
-
-const StyledHeader = styled.header`
-  color: white;
-  background-image: url(${backgroundImg});
-  background-size: cover;
-  margin: 0;
-  height: 20vh;
-  width: 100%;
-  @media (max-width: 570px) {
-    height: 45vh;
-  }
-`
-const StyledHeaderRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding: 5px;
-  font-size: 20px;
-  @media (max-width: 570px) {
-    display: contents;
-  }
-`
-const StyledSubmitButton = styled.button`
-  height: 35px;
-  width: 35px;
-  font-size: 30px;
-`
-const StyledSelect = styled.select`
-  margin: 7px;
-  margin-left: 15px;
-  margin-right: 20px;
-`
-const StyledDivider = styled.div`
-  margin-left: 10px;
-  margin-right: 10px;
-`
-const StyledH2 = styled.h2`
-  -webkit-text-stroke: 1.5px black;
-`
+import {
+  inputChange,
+  categoryChange,
+  sortByChange,
+} from '../store/reducers/FormSubmit'
+import { closeDescription } from '../store/reducers/BookDescription'
 
 const Header = () => {
   const dispatch = useAppDispatch()
 
   type SearchParams = {
-    status: string
-    gender: string
-    name: string
-    species: string
-    type: string
+    input: string
+    categories: string
+    sortBy: 'relevance' | 'newest'
   }
   const [searchParams, setSearchParams] = useState<SearchParams>({
-    status: '',
-    gender: '',
-    name: '',
-    species: '',
-    type: '',
+    input: '',
+    categories: 'all',
+    sortBy: 'relevance',
   })
 
   function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    dispatch(closePopup())
-    dispatch(inputChange(searchParams))
+    dispatch(closeDescription())
+    dispatch(inputChange(searchParams.input))
+    dispatch(categoryChange(searchParams.categories))
+    dispatch(sortByChange(searchParams.sortBy))
   }
 
   return (
-    <StyledHeader>
-      <form onSubmit={handleFormSubmit}>
-        <StyledH2>Filter characters</StyledH2>
-        <StyledHeaderRow>
-          <StyledDivider>
-            <StyledH2>Name</StyledH2>
+    <header className="header">
+      <div className="container">
+        <form onSubmit={handleFormSubmit}>
+          <h1>Search for books</h1>
+          <div className="input_row">
             <input
               type="text"
-              placeholder="Rick"
+              className="search_input"
               onChange={(e) =>
                 setSearchParams({
                   ...searchParams,
-                  name: (e.target as HTMLInputElement).value,
+                  input: (e.target as HTMLInputElement).value,
                 })
               }
             ></input>
-          </StyledDivider>
-          <StyledDivider>
-            <StyledH2>Species</StyledH2>
-            <input
-              type="text"
-              placeholder="Alien"
+            <button type="submit" className="submit_button">
+              <GiArchiveResearch className="search_icon" />
+            </button>
+          </div>
+          <div className="header_row">
+            <h2>Categories</h2>
+            <select
+              onChange={(e) =>
+                setSearchParams({ ...searchParams, categories: e.target.value })
+              }
+            >
+              <option>all</option>
+              <option>art</option>
+              <option>biography</option>
+              <option>computers</option>
+              <option>history</option>
+              <option>medical</option>
+              <option>poetry</option>
+            </select>
+            <h2>Sorting by</h2>
+            <select
               onChange={(e) =>
                 setSearchParams({
                   ...searchParams,
-                  species: (e.target as HTMLInputElement).value,
+                  sortBy: e.target.value as 'relevance' | 'newest',
                 })
               }
-            ></input>
-          </StyledDivider>
-          <StyledDivider>
-            <StyledH2>Type</StyledH2>
-            <input
-              type="text"
-              placeholder="Superhuman"
-              onChange={(e) =>
-                setSearchParams({
-                  ...searchParams,
-                  type: (e.target as HTMLInputElement).value,
-                })
-              }
-            ></input>
-          </StyledDivider>
-        </StyledHeaderRow>
-        <StyledHeaderRow>
-          <StyledH2>Status</StyledH2>
-          <StyledSelect
-            onChange={(e) =>
-              setSearchParams({ ...searchParams, status: e.target.value })
-            }
-          >
-            <option></option>
-            <option>alive</option>
-            <option>dead</option>
-            <option>unknown</option>
-          </StyledSelect>
-          <StyledH2>Gender</StyledH2>
-          <StyledSelect
-            onChange={(e) =>
-              setSearchParams({
-                ...searchParams,
-                gender: e.target.value as string,
-              })
-            }
-          >
-            <option></option>
-            <option>female</option>
-            <option>male</option>
-            <option>genderless</option>
-            <option>unknown</option>
-          </StyledSelect>
-          <StyledSubmitButton type="submit">
-            <FaSearch className="search_icon" />
-          </StyledSubmitButton>
-        </StyledHeaderRow>
-      </form>
-    </StyledHeader>
+            >
+              <option>relevance</option>
+              <option>newest</option>
+            </select>
+          </div>
+        </form>
+      </div>
+    </header>
   )
 }
 

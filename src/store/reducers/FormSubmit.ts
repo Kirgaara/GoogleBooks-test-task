@@ -1,36 +1,41 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AppDispatch } from '../store'
 
-export const inputChange = (input: FormState) => (dispatch: AppDispatch) => {
+export const inputChange = (input: string) => (dispatch: AppDispatch) => {
   dispatch(formSlice.actions.inputChange(input))
 }
+export const categoryChange = (input: string) => (dispatch: AppDispatch) => {
+  dispatch(formSlice.actions.categoryChange(input))
+}
+export const sortByChange =
+  (input: 'relevance' | 'newest') => (dispatch: AppDispatch) => {
+    dispatch(formSlice.actions.sortByChange(input))
+  }
 
 interface FormState {
-  status: string
-  gender: string
-  name: string
-  species: string
-  type: string
+  search_input: string
+  category: string
+  sortBy: 'relevance' | 'newest'
 }
 
 const initialState: FormState = {
-  status: '',
-  gender: '',
-  name: '',
-  species: '',
-  type: '',
+  search_input: '',
+  category: 'all',
+  sortBy: 'relevance',
 }
 
 export const formSlice = createSlice({
   name: 'form',
   initialState,
   reducers: {
-    inputChange(state, action: PayloadAction<FormState>) {
-      state.status = action.payload.status
-      state.gender = action.payload.gender
-      state.name = action.payload.name
-      state.species = action.payload.species
-      state.type = action.payload.type
+    inputChange(state, action: PayloadAction<string>) {
+      state.search_input = action.payload
+    },
+    categoryChange(state, action: PayloadAction<string>) {
+      state.category = action.payload
+    },
+    sortByChange(state, action: PayloadAction<'relevance' | 'newest'>) {
+      state.sortBy = action.payload
     },
   },
 })

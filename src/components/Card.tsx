@@ -1,53 +1,37 @@
 import React from 'react'
+import imgPlaceholder from '../images/No_Image.png'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
-import { pickCharacter } from '../store/reducers/CharacterPopup'
-import styled from 'styled-components'
+import { storeBook } from '../store/reducers/BookDescription'
+import toOneString from '../utils/ToOneString'
 
-const StyledName = styled.h2`
-  margin: 5px;
-  font-size: 100%;
-  font-weight: bold;
-`
-const StyledImg = styled.img`
-  height: 55%;
-  margin: 10px auto;
-`
-const StyledGender = styled.h3`
-  margin: 5px;
-  font-size: 100%;
-  font-weight: 400;
-`
-const StyledStatus = styled.h3`
-  margin: 5px;
-  font-size: 100%;
-  font-weight: 400;
-`
-const StyledCard = styled.div`
-  margin: 20px auto;
-  width: 252px;
-  height: 350px;
-  background-color: beige;
-  overflow: hidden;
-  cursor: pointer;
-  justify-content: center;
-`
-
-const Card = ({ id }: { id: number }) => {
-  const { characters } = useAppSelector((state) => state.charactersReducer)
+const Card = ({ bookPosition }: { bookPosition: number }) => {
+  const { books } = useAppSelector((state) => state.bookReducer)
   const dispatch = useAppDispatch()
   return (
-    <StyledCard onClick={() => dispatch(pickCharacter(characters[id]))}>
-      {!characters.length ? (
+    <div
+      className="card"
+      onClick={() => dispatch(storeBook(books[bookPosition].volumeInfo))}
+    >
+      {!books.length ? (
         <h2>Loading...</h2>
       ) : (
         <>
-          <StyledImg src={characters[id].image} alt="" />
-          <StyledStatus>{characters[id].status}</StyledStatus>
-          <StyledName>{characters[id].name}</StyledName>
-          <StyledGender>{characters[id].gender}</StyledGender>
+          {books[bookPosition].volumeInfo.imageLinks ? (
+            <img
+              src={books[bookPosition].volumeInfo.imageLinks.thumbnail}
+              alt=""
+            />
+          ) : (
+            <img src={imgPlaceholder} alt="" />
+          )}
+          {books[bookPosition].volumeInfo.categories ? (
+            <h3>{books[bookPosition].volumeInfo.categories[0]}</h3>
+          ) : null}
+          <h2>{books[bookPosition].volumeInfo.title}</h2>
+          <h3>{toOneString(books[bookPosition].volumeInfo.authors)}</h3>
         </>
       )}
-    </StyledCard>
+    </div>
   )
 }
 
