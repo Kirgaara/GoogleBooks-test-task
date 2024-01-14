@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
-import bookReducer from './reducers/BooksFetch'
+import charactersReducer from './reducers/CharactersFetch'
 import formReducer from './reducers/FormSubmit'
-import bookDescriptionReducer from './reducers/BookDescription'
+import characterPopupReducer from './reducers/CharacterPopup'
 
 const rootReducer = combineReducers({
-  bookReducer,
+  charactersReducer,
   formReducer,
-  bookDescriptionReducer,
+  characterPopupReducer,
 })
 
 export const setupStore = () => {
